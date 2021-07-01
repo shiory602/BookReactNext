@@ -7,21 +7,22 @@
         <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
         <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-        <style>
+        <!-- <style>
             #root {
                 cursor: pointer;
                 font-size: 20pt;
                 background-color: lightblue;
                 padding: 1px 20px;
             }
-        </style>
+        </style> -->
     </head>
     <body>
         <h1>React</h1>
-        <div id="root" onClick="doCount();">wait...</div>
-        <script>
-
-            // list1-2
+        <div id="root">wait...</div>
+        <!-- <div id="root" onClick="doCount();">wait...</div> -->
+        
+        <script src = "./script.js">
+        // list1-2
             // let dom = document.querySelector('#root');
             // let element = React.createElement(
             //     'p', {}, 'Hello React!'
@@ -29,17 +30,17 @@
             // ReactDOM.render(React.createElement('p', {}, 'Hi'), document.querySelector('#root'))
             
             // list1-3
-            let counter = 0;
-            let dom = document.querySelector('#root');
-            doCount();
+            // let counter = 0;
+            // let dom = document.querySelector('#root');
+            // doCount();
             
-            function doCount() {
-                counter++;
-                let element = React.createElement (
-                    'p', {}, "count: " + counter
-                )
-                ReactDOM.render(element, dom)
-            }
+            // function doCount() {
+            //     counter++;
+            //     let element = React.createElement (
+            //         'p', {}, "count: " + counter
+            //     )
+            //     ReactDOM.render(element, dom)
+            // }
         </script>
     </body>
 </html>
