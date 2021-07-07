@@ -9,14 +9,6 @@
         <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-        <!-- <style>
-            #root {
-                cursor: pointer;
-                font-size: 20pt;
-                background-color: lightblue;
-                padding: 1px 20px;
-            }
-        </style> -->
     </head>
     <body>
         <h1 class="bg-primary text-white display-4">React</h1>
@@ -26,12 +18,36 @@
         <script type="text/babel">
         let dom = document.querySelector('#root')
 
-        let el = (
+        let title = "New title"
+        let message = "You got a message."
+        let link = "http://google.com"
+
+        const msg_s = {
+            fontSize: "20pt",
+            color: "red",
+            border: "1px solid blue"
+        }
+
+        let el = 
             <div>
                 <h2>JSX sample</h2>
                 <p>This is sample message.</p>
             </div>
-        )
+
+            el = (
+                <div className="alert alert-primary">
+                    <h2>{title}</h2>
+                    <p>{message}</p>
+                    <h5><a href={link}>this is link!</a></h5>
+                </div>
+            )
+
+            el = (
+                <div className="alert alert-primary">
+                    <h4>{title}</h4>
+                    <p style={msg_s}>{message}</p>
+                </div>
+            )
 
         ReactDOM.render(el, dom)
         </script>
