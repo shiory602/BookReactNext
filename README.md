@@ -21,3 +21,46 @@
 | --- | --- |
 | react.js (react.development.js) | React の本体 |
 | react-dom.js (react-dom.development.js) | React の仮想DOM のスクリプトファイル |
+
+# JSX
+HTMLタグを値として直接記述できるようにするもので「文法拡張」という。
+`<script>`タグで**Babel**を読み込むことで、記述したJSXのタグをJavaScriptのコードに変換する。
+## renderできるのは１つのエレメントだけ
+JSXは**Elementオブジェクト**を生成するものなので作成するのは常に１つのエレメント
+```js
+// NG -> error
+let el = (
+    <h2>JSX sample</h2>
+    <p>This is sample message.</p>
+)
+// OK
+let el = (
+    <>
+        <h2>JSX sample</h2>
+        <p>This is sample message.</p>
+    </>
+)
+```
+## className
+JSXでは`class`という予約語が既にあるので**class属性**のことを`className`で表す。
+※`class`とかいても警告は出るが表示はできる
+### 属性の値を設定
+- NG例
+`属性 = "{}"`
+- OK例
+`属性 = {}`
+## スタイルの設定
+スタイル情報をオブジェクトとしてまとめて設定する
+```js
+const msg_s = {
+    fontSize: "20pt",
+    color: "red",
+    border: "1px solid blue"
+}
+let el = (
+    <div className="alert alert-primary">
+        <h4>{title}</h4>
+        <p style={msg_s}>{message}</p>
+    </div>
+)
+```
