@@ -38,6 +38,11 @@
             {name:'Jiro', mail:'jiro@change', age:18},
             {name:'Kumi', mail:'kumi@class', age:56},
         ]
+        let arrow_data = {
+            url: 'http://google.com',
+            title: 'Google',
+            caption: '※これは、Googleの検索サイトです。'
+        }
 
         let flg = false; // ★
 
@@ -155,6 +160,26 @@
                             ))}
                         </tbody>
                     </table>
+                </div>
+            )
+
+            el = (
+                <div>
+                    <h4>{title}</h4>
+                    <h6>{message}</h6>
+                    {(() =>
+                        <div className="card mt-4">
+                            <div className="card-header">
+                                {arrow_data.title}
+                            </div>
+                            <div className="card-body">
+                                {arrow_data.caption}
+                            </div>
+                            <div className="card-footer">
+                                <a href={arrow_data.url}>※{arrow_data.title}に移動</a>
+                            </div>
+                        </div>
+                    )()}
                 </div>
             )
 
