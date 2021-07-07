@@ -2,6 +2,13 @@
 
 1. [Using JSX and rendering with ReactDOM.render](./JSXandReactDOMrender)
 
+2. [Components](./Components)
+
+3. [Hooks](./Hooks)
+
+4. [Next.js](NextJS)
+
+5. [Firebase](Firebase)
 
 ## Folder
 | フォルダ名 | 内容 |
