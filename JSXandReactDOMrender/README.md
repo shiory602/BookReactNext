@@ -1,3 +1,205 @@
+# Display JSX
+This is called "grammar extension" because it allows HTML tags to be written directly as values.
+By loading **Babel** with `<script>` tags, the JSX tags you write are converted into JavaScript code.
+### Points
+- Attributes should be in camel script, like `onClick`, not `onclick`.
+- Use `/>` if there is no closing tag, like `<input>`.
+- Use `()` for HTML descriptions and use `{}` to embed variables and functions.
+## Only one element can be rendered
+```js
+ReactDOM.render(element to display, DOM element to embed)
+```
+JSX creates **Element objects**, so there is always one element to create.
+```js
+// NG -> error
+let el = (
+    <h2>JSX sample</h2>.
+    <p>This is sample message.</p>
+)
+
+// OK
+let el = (
+    <>
+        <h2>JSX sample</h2>
+        <p>This is sample message.</p>
+    </>
+)
+```
+## className
+Since JSX already has a reserved word `class`, we'll use `className` to represent the **class attribute**.
+If you use `class`, you will get a warning, but you can still display it.
+### set the value of the attribute
+- NG example
+`Attribute = "{}"`.
+- OK example
+`Attribute = {}`.
+## Set the style
+Set style information together as an object.
+```js
+const msg_s = {
+    fontSize: "20pt",
+    color: "red",
+    border: "1px solid blue"
+}
+let el = (
+    <div className="alert alert-primary">
+        <h4>{title}</h4>
+        <p style={msg_s}>{message}</p>
+    </div>.
+)
+```
+## Switch display
+1. display by boolean
+**Use the ternary operator** to display "condition? 00:xxxx" to switch display.
+```js
+let content_true = `*This is the message that will be displayed when it is true.
+Is it displayed properly? `
+let content_false = `*This is what is displayed when the message is false.... `
+let flg = false; // ★
+el = (
+    <div>
+        <h4>{title}</h4>
+        <h6>{message}</h6>
+        {flg ?
+            <div className="alert alert-primary mt-3">
+                <p>{content_true}</p>
+            </div>
+        :
+            <div className="alert alert-primary mt-3">
+                <p>{content_false}</p>
+            </div>
+        }
+    </div>
+)
+```
+2. display by condition
+Display by checking conditions.
+```js
+let flg = true;
+{flg &&
+    <div>
+        <p>{content}</p>
+    </div>
+}
+```
+## Iterating over an array with map
+1. combine the objects with each item into a single data as an array
+2. create items to be displayed in the table by retrieving objects from the array in order
+```js
+let map_data = [
+    {name:'Taro', mail:'taro@yamada', age:45},
+    {name:'Hanako', mail:'hanako@flower', age:37}
+    {name:'Sachiko', mail:'sachiko@happy', age:29},
+    {name:'Jiro', mail:'jiro@change', age:18},
+    {name:'Kumi', mail:'kumi@class', age:56},
+]
+{map_data.map((value) => (
+    <tr>
+        <td>{value.name}</td>
+        <td>{value.mail}</td>
+        <td>{value.age}</td>
+    </tr>
+))}
+```
+
+# JSX updates and events
+How to update as needed.
+## Render and update the display at regular intervals.
+Run the process (function) at regular intervals with `setInterval`.
+```js
+// Execute a process at 1 second interval
+setInterval(() => { processing }, 1000);
+```
+First argument: prepare a process to be executed by the arrow function.
+Second argument: set the process to be executed every 1000ms (1 second).
+### JSX is compiled when variable is assigned.
+Display counted every 1 second
+```js
+let dom = document.querySelector('#root')
+
+let title = "React page."
+let message = "Display a message."
+
+var counter = 0
+
+setInterval(() => {
+    counter++
+
+    let el = (
+        <div>
+            <h4>{title}</h4>
+            <h6>{message}</h6>
+            <h5 className="alert alert-primary">
+                count: {counter}.
+            </h5>
+        </div>
+    )
+    ReactDOM.render(el, dom)
+}, 1000)
+```
+If you take `el` out of `setInterval`, it won't be counted.
+```js
+    let el = (
+        <div>.
+            <h4>{title}</h4>
+            <h6>{message}</h6>
+            <h5 className="alert alert-primary">
+                count: {counter}.
+            </h5>
+        </div>
+    )
+
+setInterval(() => {
+    counter++
+    ReactDOM.render(el, dom)
+}, 1000)
+```
+Reason -> Because the variable `el` will not be updated after `count: 0` (variables used in JSX are not automatically updated).
+(Variables used in JSX are not automatically updated.) You can use `state` to "auto-update" it.
+## Click to update.
+Create an arrow function, and in it, increase the variable `counter`, assign the JSX value to the variable `el`, and re-render it with `ReactDOM.render`.
+```js
+let doAction = (event) => {
+    counter++
+    let el = (
+        <div>
+            <h4>{title}</h4>
+            <h6>{message}</h6>
+            <h5 className="alert alert-primary"
+                onClick={doAction}>
+                count: {counter}.
+            </h5>
+        </div>
+    )
+    ReactDOM.render(el, dom)
+};
+```
+Don't forget to call the function.
+## Using form values
+Prepare an input field and a push button.
+- Be sure to end the `input` tag with `/>`, as there is no closing tag.
+```js
+<div className="form-group">
+    <label>Input:</label>
+    <input type="text" className="form-control" id="input" onChange={doChange} />
+</div>
+<button onClick={doAction}
+    className="btn btn-primary">
+    Click
+</button>
+```
+When a function is set to the event attribute of an HTML element, an object called `event` is passed as an argument.
+When you set a function to the event attribute of an HTML element, an object called `event` is passed as an argument. `event` has a property called `target`, where the object of the element where the event occurred is stored.
+```js
+let doChange = (event) => {
+    in_val = event.target.value
+    message = 'Hello, ' + in_val + '!!!'
+}
+```
+ Translated with www.DeepL.com/Translator (free version)
+
+***
+
 # JSXの表示
 HTMLタグを値として直接記述できるようにするもので「文法拡張」という。
 `<script>`タグで**Babel**を読み込むことで、記述したJSXのタグをJavaScriptのコードに変換する。
