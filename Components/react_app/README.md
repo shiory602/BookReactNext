@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# プロジェクトでのコンポーネント
+1. アクセスすると index.html が読み込まれる
+2. index.html を読み込む際、index.js が読み込まれ実行される
+3. index.js の中で App コンポーネントが読み込まれ表示される
+### 画面に表示される内容に関するファイル
+- **public**フォルダ内
+| ファイル名 | 内容 |
+| --- | --- |
+| index.html | これがアクセス時に表示されるHTMLファイル。この中に、画面表示に関する基本的な要素がまとめてある。 |
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- **src**フォルダ
+| ファイル名 | 内容 |
+| --- | --- |
+| index.js | アプリケーションのペーストなるスクリプト |
+| index.css | index.jsで使用するスタイルシート |
+| App.js | indexに組み込まれる、実際に画面に表示をしているコンポーネント |
+| App.css | Appコンポーネントのスタイルシート |
 
-## Available Scripts
+## index.html
+`<noscript>`は、JavaScriptが動作しない環境の時に表示されるもの
+`<div id="root"></div>`はReactの表示を組み込むためのタグ
+```js
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>React App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
+```
+サーバープログラムにアクセスがあった時に`index.js`を組み込んで実行する処理が背後で行われるので`<script>`タグはない
+また、ReactのCDNはプロジェクトの中に組み込まれているのでタグを用意する必要はない
+Bootstrapなどを使うときはタグを`index.html`の`<head>`内に記述する
+## index.js
+`index.html`から読み込まれて実行される
+Reactの表示を行なっている部分（`<React.StrictMode>`は削除しても問題ない）
+```js
+import React from 'react'; // Reactオブジェクト
+import ReactDOM from 'react-dom'; // ReactDOMオブジェクト
+import './index.css'; // index.cssによるスタイルクラス
+import App from './App'; // App.jsによるAppコンポーネント
+import reportWebVitals from './reportWebVitals';
 
-In the project directory, you can run:
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+// アプリのパフォーマンスを分析するためのもの
+reportWebVitals();
+```
+## App コンポーネント
 
-### `npm start`
+```js
+import logo from './logo.svg';
+import './App.css';
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default App;
+```

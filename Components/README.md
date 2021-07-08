@@ -1,3 +1,186 @@
+## Create a component
+**Components** are the "parts" that are displayed on the screen in React.
+It combines necessary data, processing, etc. into a single object.
+## "Function" components
+Return the element to be displayed with `return
+Just return the value of JSX with `return`.
+```js
+function component name ( argument ) {
+    return Display_by_JSX;
+}
+```
+### Components can be written as dags.
+One way to use components is to write them as tags in JSX.
+In the case of a function component, write it as a tag using the name of the defined function.
+```js
+<component_name />
+```
+The element that was `returned` by the function will be embedded in this tag.
+## Displaying Components 1.
+1. define a function
+```js
+function Welcome(props) {
+    return <div className="alert alert-primary">
+            <p className="h4">Hello React! </p>
+        </div>
+}
+```
+Specify the position to be displayed in JSX
+```js
+let el = (
+    <div>
+        <h5 class="mb-4">{message}</h5>
+        <Welcome />
+    </div>
+)
+```
+3. drawing
+```js
+ReactDOM.render(el, dom)
+```
+### Component names
+Components must have a name that starts with a capital letter.
+The second and subsequent letters are not case sensitive.
+- NG
+`welcome`
+- OK
+`Welcome
+`WELCOME
+## Use "attributes"
+The function component is provided with one argument (the tag's "attributes" summarized in an object).
+- Function
+Takes a value from the argument `props` and sets it to an attribute of `<div>` as `className={props.alert}`.
+```js
+function Welcome(props) {
+    return <div className={props.alert}>
+            <p className={props.fontSize}>Hello {props.name}! </p>
+        </div>
+}
+```
+- JSX description
+Make sure `Welcome` is passed a value such as `alert`.
+```js
+<Welcome name="Taro" fontSize="h2" alert="alert alert-primary" />
+<Welcome name="Hanako" fontSize="h5" alert="alert alert-dark" />
+```
+## Calculate with components
+1. extract the value of the property `number` with the `Calc` component function 2.
+Calculate the sum of the values from 1 to `number` using iteration. 3.
+3. `return` the result.
+It is also possible to include components within components.
+Example: Passing data to `<Calc />` in `<Welcome />`.
+```js
+function Welcome(props) {
+    return <div className="alert alert-primary">
+            <Calc classes={props.classes} number={props.number} />
+        </div>
+}
+
+function Calc(props) {
+    let total = 0
+    for(let i = 1; i <= props.number; i++) {
+        total += i
+    }
+    return <p className={props.classes}>
+        The sum of numbers from 1 to {props.number} is "{total}". </p>
+}
+
+let el = (
+    <div>
+        <Welcome number="10" classes="h3" />
+        <Welcome number="100" classes="h5" />
+        <Calc number="50" classes="h4" />
+        <Calc number="500" classes="h6" />
+    </div>
+)
+ReactDOM.render(el, dom)
+```
+
+# Class components
+Basic form
+```js
+class class_name {
+    constructor(props) {
+        super(props)
+        Initialization process
+    }
+    // property
+    // method
+    method name( argument ) {
+        Method processing
+    }
+}
+```
+### constructor method
+The first method executed when creating an object from a class, to initialize the object.
+- It takes only one argument, which is the value of the attribute of the object as well as the argument of the function component.
+- Always write `super(props)` at the beginning of the `constructor method`.
+    This method is used to call `constructor` of the class inherited by `extends`.
+## How to write a class component
+React provides a class called `React.Component` which has all the component functions.
+Component`, which has a set of component functions, and you can define your own components by inheriting from this class.
+### render method
+This method renders the component, and must be added to the component class (no argument, has `return`).
+```js
+class Hello extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    render() {
+        return <div className="alert alert-primary">
+                <p className="h4">Hello! </p>
+            </div>
+    }
+}
+```
+## Using "attributes
+Preparing properties in a class component
+```js
+x = 0
+y = 0
+width = 0
+height = 0
+color = "white"
+style = {}
+```
+Provide properties that can be changed in the `constructor` method
+```js
+this.x = props.x
+this.y = props.y
+this.width = props.w
+this.height = props.h
+this.color = props.c
+this.style = {
+    backgroundColor: this.color,
+    position: "absolute",
+    left: this.x + "px",
+    top: this.y + "px",
+    width: this.width + "px",
+    height: this.height + "px"
+}
+```
+3. display with render
+```js
+render() {
+    return <div style={this.style}></div>
+}
+```
+Specifying attributes in JSX part
+```js
+let el = (
+    <div>
+        <h5>{message}</h5>
+        <div> <Rect
+            <Rect x="200" y="200" w="200" h="200" c="cyan" />
+            <Rect x="300" y="300" w="200" h="200" c="magenta" />
+        </div>
+    </div>
+)
+```
+
+***
+
 ## コンポーネントを作る
 **コンポーネント**はReactで画面に表示される「部品」のこと
 必要なデータ・処理などを１つのオブジェクトにまとめたもの
@@ -178,100 +361,4 @@ let el = (
         </div>
     </div>
 )
-```
-
-# プロジェクトでのコンポーネント
-1. アクセスすると index.html が読み込まれる
-2. index.html を読み込む際、index.js が読み込まれ実行される
-3. index.js の中で App コンポーネントが読み込まれ表示される
-### 画面に表示される内容に関するファイル
-- **public**フォルダ内
-| ファイル名 | 内容 |
-| --- | --- |
-| index.html | これがアクセス時に表示されるHTMLファイル。この中に、画面表示に関する基本的な要素がまとめてある。 |
-
-- **src**フォルダ
-| ファイル名 | 内容 |
-| --- | --- |
-| index.js | アプリケーションのペーストなるスクリプト |
-| index.css | index.jsで使用するスタイルシート |
-| App.js | indexに組み込まれる、実際に画面に表示をしているコンポーネント |
-| App.css | Appコンポーネントのスタイルシート |
-
-## index.html
-`<noscript>`は、JavaScriptが動作しない環境の時に表示されるもの
-`<div id="root"></div>`はReactの表示を組み込むためのタグ
-```js
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>React App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
-</html>
-```
-サーバープログラムにアクセスがあった時に`index.js`を組み込んで実行する処理が背後で行われるので`<script>`タグはない
-また、ReactのCDNはプロジェクトの中に組み込まれているのでタグを用意する必要はない
-Bootstrapなどを使うときはタグを`index.html`の`<head>`内に記述する
-## index.js
-`index.html`から読み込まれて実行される
-Reactの表示を行なっている部分（`<React.StrictMode>`は削除しても問題ない）
-```js
-import React from 'react'; // Reactオブジェクト
-import ReactDOM from 'react-dom'; // ReactDOMオブジェクト
-import './index.css'; // index.cssによるスタイルクラス
-import App from './App'; // App.jsによるAppコンポーネント
-import reportWebVitals from './reportWebVitals';
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-// アプリのパフォーマンスを分析するためのもの
-reportWebVitals();
-```
-## App コンポーネント
-
-```js
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
 ```
