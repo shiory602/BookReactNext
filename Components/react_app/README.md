@@ -4,11 +4,13 @@
 3. app component is loaded and displayed in `index.js`.
 ### Files related to what is displayed on the screen
 - In **public** folder
+
 | file name | contents |
 | --- | --- |
 | index.html | This is the HTML file that is displayed when accessing the site. This is the HTML file that is displayed when you access the site. In this file, the basic elements related to the screen display are summarized. |
 
 - **src** folder
+
 | file name |
 | --- | --- |
 | index.js | Script that serves as the paste for the application |
