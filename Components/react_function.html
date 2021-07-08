@@ -19,17 +19,28 @@
 
         // 関数コンポーネント
         function Welcome(props) {
-            return <div className={props.alert}>
-                    <p className={props.fontSize}>Hello {props.name}!!</p>
+            return <div className="alert alert-primary">
+                    <Calc classes={props.classes} number={props.number} />
                 </div>
+        }
+
+        function Calc(props) {
+            let total = 0
+            for(let i = 1; i <= props.number; i++) {
+                total += i
+            }
+            return <p className={props.classes}>
+                The sum of numbers from 1 to {props.number} is "{total}".</p>
         }
 
         // 表示するJSX
         let el = (
             <div>
                 <h5 class="mb-4">{message}</h5>
-                <Welcome name="Taro" fontSize="h2" alert="alert alert-primary" />
-                <Welcome name="Hanako" fontSize="h5" alert="alert alert-dark" />
+                <Welcome number="10" classes="h3" />
+                <Welcome number="100" classes="h5" />
+                <Calc number="50" classes="h4" />
+                <Calc number="500" classes="h6" />
             </div>
         )
         ReactDOM.render(el, dom)
