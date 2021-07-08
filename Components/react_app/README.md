@@ -11,12 +11,13 @@
 
 - **src** folder
 
-| file name |
+| file name | contents |
 | --- | --- |
 | index.js | Script that serves as the paste for the application |
 | index.css | Style sheet used in index.js |
 | App.js | Component that is embedded in index and is actually displayed on the screen |
 | App.css | Style sheet for App component |
+
 ## index.html
 `<noscript>` is what is displayed when the environment does not allow JavaScript to work.
 `<div id="root"></div>` is a tag to incorporate React's display
