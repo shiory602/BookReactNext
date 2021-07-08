@@ -65,7 +65,7 @@ ReactDOM.render(
 reportWebVitals();
 ```
 ## App コンポーネント
-
+実際に画面に表示されているコンポーネント
 ```js
 import logo from './logo.svg';
 import './App.css';
@@ -92,4 +92,50 @@ function App() {
 }
 
 export default App;
+```
+クラスコンポーネントに書き換えると↓
+```js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                ...
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+`import`で`React`と`Component`を読み込む
+（`Component`はコンポーネントクラスで`extends`していた`React.Component`のこと）
+### export と import
+- export
+`import`でこれをインポートしたときに、このAppがデフォルトで取り出せるようにする
+- import
+コンポーネント側で`export`したものをインポートする
+### 属性の利用
+`constructor`の引数`props`から`title`と`message`という値を取り出し、プロパティに設定
+```js
+constructor(props) {
+super()
+this.title = props.title
+this.message = props.message
+}
+```
+`render`で、`this.title`と`this.message`を表示する
+```js
+render() {
+return <div>
+    <h1 className="bg-primary text-while display-4">React</h1>
+    <div className="container">
+        <p className="subtitle">{this.title}</p>
+        <p>{this.message}</p>
+    </div>
+    </div>
+}
 ```
