@@ -1,7 +1,7 @@
 # Components in a project
-1. index.html is loaded when accessed
-When index.html is loaded, index.js is loaded and executed. 3.
-When index.html is loaded, index.js is loaded and executed. 3. app component is loaded and displayed in index.js.
+1. `index.html` is loaded when accessed
+2. When `index.html` is loaded, `index.js` is loaded and executed.
+3. app component is loaded and displayed in `index.js`.
 ### Files related to what is displayed on the screen
 - In **public** folder
 | file name | contents |
