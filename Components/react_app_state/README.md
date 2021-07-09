@@ -1,3 +1,256 @@
+# State
+ Changing the properties will not change the display of the component.
+ If you change a variable or property used for display, you need to call `ReactDOM.render` to update the display further.
+ However, if you use states, the display will be updated automatically just by changing the value.
+
+### Properties
+Used to store values in a class.
+They are used not only for components but for classes in general.
+
+### Attributes (props)
+Used to store a set of attributes for a component.
+They are used to store a set of attributes of a component, and are basically "read only", meaning that they can only be retrieved and not modified.
+
+### State.
+A complement of values representing the state of the component.
+It is used to handle the "current state" of a component.
+You can manipulate the state of a component by manipulating the value of the state.
+
+## Displaying states
+Initializing values with `constructor` in `App.js`.
+```js
+this.state = { ... Prepare the value... }
+```
+1. Prepare the value of the state `msg` in `constructor`.
+```js
+this.state = {
+    msg:'Hello Component.'
+}
+```
+2. Passing values in parent and child component `index.js
+```js
+ReactDOM.render(
+  <React.StrictMode>
+    <App msg="Hello App." />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+3. display values in `JSX` of `App.js`.
+```js
+// State values are retrieved in `this.state.00`.
+<p className="alert alert-warning">{this.state.msg}</p>
+// The value of the attribute is retrieved in `this.props.00`.
+<p className="alert alert-dark">{this.props.msg}</p>
+```
+## Update the state
+Use the component's `setState` method to change the state.
+```js
+this.setState({})
+```
+In the `setState` function, the prepared value will be **added** to the state, and updated if the value is already the same.
+If no value is prepared for the `setState`, the value already in the state will be kept and not **removed**.
+1. Preparing state in `constructor`.
+```js
+this.state = {
+    msg:'Hello',
+    count: 0,
+}
+```
+2. create a timer with `constructor`.
+First argument: describe the process to be executed.
+Second argument: Set the interval in milliseconds to run.
+```js
+let timer = setInterval(() => { ... Abbreviation... }, 1000)
+```
+3. update the state value with `setState` as the first argument of the timer
+Each time it is called, the value of the `count` state is increased by 1 and the display of the `msg` state is updated.
+```js
+this.setState({
+    count: this.state.count + 1,
+    msg: "[ count: " + this.state.count + " ]"
+})
+```
+## Bind events.
+> Create a mechanism to update the display when a button is pressed.
+There are two things that need to be done when setting up events for a component: "setting up functions for events" and "binding".
+## Setting up a function for an event
+Set up the process to be executed for `onClick`.
+```js
+<button onClick={this.function_name} >
+```
+### Bind
+The bind method creates a new function that will be set to the value specified in the this keyword when it is called.
+
+Bind `this` to the method set to `onClick`.
+Execute the method named **bind** from the method assigned to the event.
+Assign `this` as an argument and assign the return value to the method so that the method can be executed from the event.
+```js
+this.function_name = this.function_name.bind(variable corresponding to this[, value corresponding to argument...]) ;
+```
+Set the `onClick` attribute to `this.doAction` to execute the component's `doAction` method when clicked.
+```js
+<button className="btn btn-primary"
+    onClick={this.doAction}>
+        Click
+</button>.
+```
+Bind events in the `constructor` method for initialization, so that they can be executed by events.
+```js
+this.doAction = this.doAction.bind(this)
+```
+3. update the `doAction` function to increase the count when clicked
+```js
+doAction(event) {
+    this.setState({
+        counter: this.state.counter + 1,
+        msg: '*** count: ' + this.state.counter + ' ***'
+    })
+}
+```
+## Switch the display by state.
+Toggle the display by the boolean value of `flg`.
+Using Ternary Operators in JSX
+```js
+{this.state.flg ?
+    <div className="alert alert-primary text-right">
+        <p className="h5">count: {this.state.msg}</p>
+    </div>
+:
+    <div className="alert alert-warning text-left">
+        <p className="h5">{this.state.msg}. </p>.
+    </div> .
+}
+```
+## Linking properties and states.
+> Clicking inside a square area adds a rectangle to the location.
+Save the information of the clicked location to `data` (a property that completes an array) with `doAction`.
+pageX` and `pageY` are the distance from the top left corner of the page to the clicked point.
+State values cannot be manipulated directly.
+```js
+doAction(e) {
+    let x = e.pageX
+    let y = e.pageY
+    this.data.push({x:x, y:y})
+    this.setState({
+    list: this.data
+    })
+}
+```
+## List display component
+Create three components
+
+| component name | content |
+| --- | --- |
+| App | Pace of display |
+| List | Display the whole list at once (title with `<p>` tag and list with `<ul>`). |
+| Item | Display each item of a list. Prepare the content to be displayed for each item of the list using the `<p>` tag. |
+
+1. specify the title and list data as attributes in the `List` component called in the `App`.
+```js
+<List title="Sample List" data={this.data} />
+```
+2. iteration with `map` in `List` component
+In `<li>`, put `<Item>` component and specify attributes
+```js
+<ul className="list-group">
+    {data.map((item, key) =>
+    <li className="list-group-item" key={key}>
+        <Item number={key + 1} value={item} />
+    </li>
+    )}
+</ul>
+```
+3. create an item
+```js
+<p style={this.itm}>
+    <span style={this.num}>
+        [{this.props.number}]&nbsp;
+    </span>
+    {this.props.value}
+</p>
+```
+### Hole code
+```js
+import React, { Component } from 'react'
+import './App.css';
+
+class App extends Component {
+  data = [
+    "This is list sample.",
+    "これはリストのサンプルです。",
+    "配列をリストに変換します。"
+  ]
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      list: this.data
+    }
+  }
+
+  render() {
+    return <div>
+      <h1 className="bg-primary text-white display-4">React</h1>
+      <div className="container">
+        <p className="subtitle">Show List.</p>
+        <List title="サンプル・リスト" data={this.data} />
+      </div>
+    </div>
+  }
+}
+
+class List extends Component {
+  number = 1
+
+  render() {
+    let data = this.props.data;
+    return (
+      <div>
+        <p className="h5 text-center">{this.props.title}</p>
+        <ul className="list-group">
+          {data.map((item, key) =>
+            <li className="list-group-item" key={key}>
+              <Item number={key + 1} value={item} />
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+}
+
+class Item extends Component {
+  itm = {
+    fontSize: "16px",
+    color: "#00f",
+    textDecoration: "underline",
+    textDecorationColor: "#ddf"
+  }
+
+  num = {
+    fontWeight: "bold",
+    color: "red"
+  }
+
+  render() {
+    return (
+      <p style={this.itm}>
+        <span style={this.num}>
+          [{this.props.number}]&nbsp;
+        </span>
+        {this.props.value}
+      </p>
+    )
+  }
+}
+
+
+export default App;
+```
+
+***
+
 # ステート
  プロパティは変更してもコンポーネントの表示は変わらない。
  表示に利用している変数やプロパティを変更したら、さらに`ReactDOM.render`を呼び出して表示を更新する必要がある。
