@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# コンテキスト
+コンポーネントに固有の値を持たせる場合、属性を使い`this.props`で取り出す。
+いくつもあるコンポーネント全てに同じ値を渡して処理をする場合、「全体で共通して使える値」を用意し利用する。
+## コンテキストの作成
+`createContext`メソッドを使って変数にコンテキストを代入する
+コンテキストの引数には、各コンポーネントで利用したい値を保管する
+```js
+const 変数 = React.createContext( 値 )
+```
+※全てのクラスで共通して使えるようにする必要があるので、**クラスの外側**で実行する
+## コンポーネントの利用
+コンポーネント内に静的プロパティを追加することでコンテキストを設定する
+```js
+static contextType = 変数
+```
+設定されたコンテキストの値は、`this.context`プロパティにまとめられる。
+取り出すときは`this.context.〇〇`とする。
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```js
+import React, { Component } from 'react'
+import './App.css';
 
-## Available Scripts
+let data = {title: 'React-Context',
+  message: 'this is sample message.'}
 
-In the project directory, you can run:
+  const SampleContext = React.createContext(data)
 
-### `npm start`
+  class App extends Component {
+    render() {
+      return <div>
+        <h1 className="bg-primary text-white display-4">React</h1>
+        <div className="container">
+          <Title />
+          <Message />
+        </div>
+      </div>
+    }
+}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+class Title extends Component {
+  static contextType = SampleContext
+  render() {
+    return (
+      <div className="card p-2 my-3">
+        <h2>{this.context.title}</h2>
+      </div>
+    )
+  }
+}
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+class Message extends Component {
+  static contextType = SampleContext
 
-### `npm test`
+  render() {
+    return (
+      <div className="alert alert-primary">
+        <p>{this.context.message}</p>
+      </div>
+    )
+  }
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default App;
+```
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
