@@ -15,7 +15,8 @@ static contextType = 変数
 ```
 設定されたコンテキストの値は、`this.context`プロパティにまとめられる。
 取り出すときは`this.context.〇〇`とする。
-
+# コンテキストの使用
+> 全てのコンポーネントで同じ値を常に利用する場合
 ```js
 import React, { Component } from 'react'
 import './App.css';
@@ -63,3 +64,72 @@ class Message extends Component {
 export default App;
 ```
 
+# Provider でコンテキストを変更
+> 一時的にコンテキストの値を変更する
+プロバイダーは`createContext`で作成したコンテキストの`Provider`プロパティとして用意されるコンポーネント
+`value`に新しい値を設定すると、このタグの中でだけコンテキストの値が変更される。
+外側のコンポーネントには営業がなく、内部でのみ値を変更できる。
+### 記述例
+```js
+<コンテキスト.Provider value=値>
+    ...component...
+</ コンテキスト.Provider>
+```
+## Provider の利用
+```js
+import React, { Component } from 'react'
+import './App.css';
+
+let data = {title: 'React-Context',
+  message: 'this is sample message.'}
+
+  const SampleContext = React.createContext(data)
+
+  class App extends Component {
+    newdata = {title: '新しいタイトル',
+      message: 'これは新しいメッセージです。'}
+
+    render() {
+      return <div>
+        <h1 className="bg-primary text-white display-4">React</h1>
+        <div className="container">
+          <Title />
+          <Message />
+          <hr />
+          <SampleContext.Provider value={this.newdata}>
+            <Title />
+            <Message />
+          </SampleContext.Provider>
+          <hr />
+          <Title />
+          <Message />
+        </div>
+      </div>
+    }
+}
+
+class Title extends Component {
+  static contextType = SampleContext
+  render() {
+    return (
+      <div className="card p-2 my-3">
+        <h2>{this.context.title}</h2>
+      </div>
+    )
+  }
+}
+
+class Message extends Component {
+  static contextType = SampleContext
+
+  render() {
+    return (
+      <div className="alert alert-primary">
+        <p>{this.context.message}</p>
+      </div>
+    )
+  }
+}
+
+export default App;
+```
