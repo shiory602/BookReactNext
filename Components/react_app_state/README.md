@@ -138,3 +138,112 @@ doAction(e) {
 }
 ```
 ## リスト表示コンポーネント
+３つコンポーネントを作る
+| コンポーネント名 | 内容 |
+| --- | --- |
+| App | 表示のペース |
+| List | リスト全体をまとめて表示する（`<p>`タグでタイトルと`<ul>`でリスト） |
+| Item | リストの各項目を表示。`<p>`タグを使ってリストの各項目に表示する内容を用意 |
+
+1. `App`内で呼び出す`List`コンポーネントではタイトルとリストのデータを属性に指定
+```js
+<List title="サンプル・リスト" data={this.data} />
+```
+2. `List`コンポーネントで`map`による繰り返し表示
+`<li>`の中には`<Item>`コンポーネントを入れ、属性を指定
+```js
+<ul className="list-group">
+    {data.map((item, key) =>
+    <li className="list-group-item" key={key}>
+        <Item number={key + 1} value={item} />
+    </li>
+    )}
+</ul>
+```
+3. `Item`で項目を作成
+```js
+<p style={this.itm}>
+    <span style={this.num}>
+        [{this.props.number}]&nbsp;
+    </span>
+    {this.props.value}
+</p>
+```
+### 全体コード
+```js
+import React, { Component } from 'react'
+import './App.css';
+
+class App extends Component {
+  data = [
+    "This is list sample.",
+    "これはリストのサンプルです。",
+    "配列をリストに変換します。"
+  ]
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      list: this.data
+    }
+  }
+
+  render() {
+    return <div>
+      <h1 className="bg-primary text-white display-4">React</h1>
+      <div className="container">
+        <p className="subtitle">Show List.</p>
+        <List title="サンプル・リスト" data={this.data} />
+      </div>
+    </div>
+  }
+}
+
+class List extends Component {
+  number = 1
+
+  render() {
+    let data = this.props.data;
+    return (
+      <div>
+        <p className="h5 text-center">{this.props.title}</p>
+        <ul className="list-group">
+          {data.map((item, key) =>
+            <li className="list-group-item" key={key}>
+              <Item number={key + 1} value={item} />
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+}
+
+class Item extends Component {
+  itm = {
+    fontSize: "16px",
+    color: "#00f",
+    textDecoration: "underline",
+    textDecorationColor: "#ddf"
+  }
+
+  num = {
+    fontWeight: "bold",
+    color: "red"
+  }
+
+  render() {
+    return (
+      <p style={this.itm}>
+        <span style={this.num}>
+          [{this.props.number}]&nbsp;
+        </span>
+        {this.props.value}
+      </p>
+    )
+  }
+}
+
+
+export default App;
+```
