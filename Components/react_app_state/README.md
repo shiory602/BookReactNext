@@ -108,3 +108,18 @@ doAction(event) {
     })
 }
 ```
+## ステートで表示を切り替える
+`flg`の真偽値で表示を切り替える
+JSXで三項演算子を使う
+```js
+{this.state.flg ?
+    <div className="alert alert-primary text-right">
+        <p className="h5">count: {this.state.msg}</p>
+    </div>
+:
+    <div className="alert alert-warning text-left">
+        <p className="h5">{this.state.msg}です。</p>
+    </div>
+}
+```
+## プロパティとステートの連携
