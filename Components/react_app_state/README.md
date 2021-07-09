@@ -123,3 +123,18 @@ JSXで三項演算子を使う
 }
 ```
 ## プロパティとステートの連携
+> 四角いエリア内をクリックするとその場所に四角形が追加される
+クリックした位置の情報を`doAction`で`data`（配列を補完するプロパティ）に保存
+`pageX`と`pageY`はページの左上からクリックした地点までの距離
+※ステートの値は直接操作できない
+```js
+doAction(e) {
+    let x = e.pageX
+    let y = e.pageY
+    this.data.push({x:x, y:y})
+    this.setState({
+    list: this.data
+    })
+}
+```
+## リスト表示コンポーネント
