@@ -59,10 +59,12 @@ function App() {
   const [tax2, setTax2] = useState(0)
   const [msg, setMsg] = useState(<p>set a price...</p>)
 
+  // 入力値の更新だけ
   const doChange = (event) => {
     setVal(event.target.value)
   }
 
+  // 結果の表示だけ
   const doAction = () => {
     let res = <div>
       <p>軽減税率（8%）：{tax1} 円</p>
