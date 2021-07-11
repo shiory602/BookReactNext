@@ -110,3 +110,73 @@ function App() {
   );
 }
 ```
+- 子コンポーネントからステートの値を操作する
+1. 親コンポーネント`App.js`の中でステートを宣言する
+```js
+const [alert, setAlert] = useState("This is alert message!")
+const [card, setCard] = useState("This is card message!")
+```
+2. JSXに用意した子コンポーネントに渡す
+```js
+<AlertMessage alert={alert} setAlert={setAlert} />
+<CardMessage card={card} setCard={setCard} />
+```
+3. それぞれのコンポーネントでステートを操作する
+```js
+function AlertMessage(props) {
+  const data = ["Hello!", "Welcome...", "Good-bye?"]
+
+  const actionAlert = () => {
+    const re = data[Math.floor(Math.random() * data.length)]
+    props.setAlert('message: "' + re + '".')
+  }
+
+  return <div className="alert alert-primary h5 text-primary">
+    <h5>{props.alert}</h5>
+    <button onClick={actionAlert} className="btn btn-primary">
+      Click me!
+    </button>
+  </div>
+}
+
+function CardMessage(props) {
+  const [count, setCount] = useState(0)
+
+  const actionCard = () => {
+    setCount(count + 1)
+    props.setCard("card counter: " + count + " count.")
+  }
+
+  return <div className="card p-3 h5 border-primary text-center">
+    <h5>{props.card}</h5>
+    <button onClick={actionCard} className="btn btn-secondary">
+      Click me!
+    </button>
+  </div>
+}
+```
+### コンポーネントの変数は消える
+数字のカウントに`const`ステートを使用しなくとも良いのではないか？
+1. ステートを`let`に変更
+```js
+const [count, setCount] = useState(0)
+```
+↓
+```js
+let count = 0
+```
+2. イベント用関数の変更
+```js
+const actionCard = () => {
+    setCount(count + 1)
+    props.setCard("card counter: " + count + " count.")
+}
+```
+↓
+```js
+const actionCard = () => {
+    count++
+    props.setCard("card counter: " + count + " count.")
+}
+```
+結果：関数コンポーネントは、状態を保持しないためカウントはされない
