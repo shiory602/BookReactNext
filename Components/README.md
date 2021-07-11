@@ -178,6 +178,29 @@ let el = (
     </div>
 )
 ```
+## Difference between "function component" and "class component
+# Different usage of "State".
+- Class Component
+State is used for values that are used for display
+Values that are not used for display are stored as properties.
+- Function components
+Basically, all values used in a component are stored as state.
+All values that are not used for display but are retained in the component should be stored as state.
+## Function components are always reloaded.
+- Class components are kept in state.
+A class creates an instance, which is always stored in memory and keeps its contents while the program is running.
+So, even if you don't use state, if you store a value in a property, it will be retained until the page is reloaded.
+- Function components are not stored.
+Functions are called and executed when they are displayed or updated, and that's it.
+They are not always kept in the same state as class components, but are called as needed.
+In other words, they are not always running.
+## State, not variables
+Variables in a function component are always returned to their initial state because the function is re-executed every time the component is updated.
+Variables cannot store values.
+Variables store values temporarily** while the process in the function component is being executed.
+If you want to keep the value as the state of the component at all times, you need to prepare it as a state.
+
+> Class components are always stored in memory, but function components are just executed.
 
 ***
 
@@ -362,3 +385,27 @@ let el = (
     </div>
 )
 ```
+
+# 「関数コンポーネント」と「クラスコンポーネント」の違い
+## 「ステート」の使い方が異なる
+- クラスコンポーネント
+ステートに使うのは表示に使われる値
+表示に使われるわけではない値はプロパティとして保管しておく
+- 関数コンポーネント
+コンポーネントで使われる値は基本的に全てステートとして保管
+表示に使われていないものでもコンポーネント内で値を保持するものは全てステートにする
+## 関数コンポーネントは常にリロードされる
+- クラスコンポーネントは状態維持される
+クラスはインスタンスを作成しており、インスタンスはプログラムが実行中の間、常にメモリ内に保管され内容が保たれる
+なので、ステートを使わなくとも、プロパティに値を保管しておけば、ページがリロードされるまでずっと保持される
+- 関数コンポーネントはされない
+関数は表示や更新などのタイミングで呼び出されて実行され、それで終わってしまう
+クラスコンポーネントのように常に状態が保たれるわけではなく、必要に応じて呼び出されている
+つまり、常に動いているわけではない
+## 変数ではなくステート
+関数コンポーネント内にある変数は、コンポーネントが更新されるたびに関数が再実行されるため常に初期状態に戻る
+変数に値を保管しておくことはできない
+変数は**関数コンポーネント内の処理を実行中の間**、一時的に値を保管するもの
+コンポーネントの状態として常に値を保管しておきたいものは、全てステートとして用意しておく必要がある
+
+> クラスコンポーネントは常にメモリ内に保管されているが、関数コンポーネントはただ実行されるだけ
