@@ -52,3 +52,44 @@ const [counter, plus] = useCounter()
     count
 </button>
 ```
+
+## ２つ以上の値を返すフックを作ってみる
+1. 引数に通常税率、軽減税率を渡して設定
+2. 戻り値に全額、通常税率の税込価格、軽減税率の税込価格、金額の設定を用意
+```js
+const useTax = (t1, t2) => {
+    const [price, setPrice] = useState(1000)
+    const [tx1] = useState(t1)
+    const [tx2] = useState(t2)
+
+    const tax = () => {
+        return Math.floor(price * (1.0 + tx1 / 1000))
+    }
+
+    const reduced = () => {
+        return Math.floor(price * (1.0 + tx2 / 100))
+    }
+
+    return [price, tax, reduced, setPrice]
+}
+```
+### 複数の値を返すフックを使用する
+ここでは`price`のみが変数で、他の３つは関数
+```js
+const [price, tax, reduced, setPrice] = useTax(10, 8)
+
+const DoChange = (e) => {
+    let p = e.target.value
+    setPrice(p)
+}
+
+return <div className="alert alert-primary h5">
+    <p className="h5">通常税率: {tax()} 円.</p>
+    <p className="h5">軽減税率: {reduced()} 円.</p>
+    <div className="font-group">
+        <label className="form-group-label">Price:</label>
+        <input type="number" className="form-control"
+            onChange={DoChange} value={price} />
+    </div>
+</div>
+```
