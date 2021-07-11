@@ -1,0 +1,54 @@
+# 独自フックを作る
+- 関数名は`use`で始まるようにする
+- 独自フック関数は**２つの値**を返す
+- ２つの値は**配列**の形でまとめておく
+```js
+function use〇〇 () {
+    const ステート
+    const 関数
+    return [ 値 ]
+}
+```
+値１：フックの値を得るための変数
+値２：フックの値を変更するための関数
+## 数字をカウントするフックを作ってみる
+1. 数字を保管するステート
+2. 呼び出すと１だけ増やす関数
+```js
+function useCounter() {
+    const [num, setNum] = useState(0)
+
+    const count = () => {
+        seNum(num + 1)
+    }
+
+    return [num, count]
+}
+```
+まず、値を保管するステートでは`useState`で0で初期化している
+```js
+const [num, setNum] = useState(0)
+```
+数字をカウントする関数は下記の通り
+```js
+const count = () => {
+    seNum(num + 1)
+}
+```
+２つの値を`return`で返す
+```js
+return [num, count]
+```
+### 独自フックを使用する
+使い方は`useState`と同じ
+戻り値に`[counter, plus]`と２つの変数を用意し、それぞれに値と関数を代入する
+```js
+const [counter, plus] = useCounter()
+```
+`<h4>`でステートの値を表示し、`<button>`の`onClick`でカウント関数を呼び出す
+```js
+<h4>count: {counter} .</h4>
+<button onClick={plus} className="btn btn-primary">
+    count
+</button>
+```
