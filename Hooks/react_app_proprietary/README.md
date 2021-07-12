@@ -93,3 +93,20 @@ return <div className="alert alert-primary h5">
     </div>
 </div>
 ```
+## アルゴリズムをフックに抽出する
+「計算の仕方」も引数として渡す＝関数を引数に渡す
+```js
+function useCalc(num=0, func = (a) => {return a}) {
+    const [msg, setMsg] = useState(null)
+
+    const setValue = (p) => {
+        let res = func(p)
+        setMsg(<p className="h5">※ {p} の結果は、 {res} です。</p>)
+    }
+
+    return [msg, setValue]
+}
+```
+引数は`num`と`func`の２つ
+`num`の初期値 -> 0
+`func`の初期値 -> `(a) => {return a}`
