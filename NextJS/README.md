@@ -38,6 +38,7 @@ npm start
 
 ## Project structure
 - Folders
+
 | folder name | contents |
 | --- | --- | .next |
 | .next | This folder is created when you run the project, not when you create it. The files of the web app generated from the project are saved in this folder. |
@@ -45,7 +46,9 @@ npm start
 | pages | Contains the contents of the web pages to be displayed. |
 | public | A list of resources (image files, etc.) to be made public. |
 | styles | Contains style sheet files. |
+
 - Files
+
 | file name | contents |
 | --- | --- |
 | gitignore | files for the Git version control system |
