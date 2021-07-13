@@ -40,7 +40,7 @@ npm start
 - Folders
 
 | folder name | contents |
-| --- | --- | .next |
+| --- | --- |
 | .next | This folder is created when you run the project, not when you create it. The files of the web app generated from the project are saved in this folder. |
 | node_modules | This folder contains the npm packages required by the project. |
 | pages | Contains the contents of the web pages to be displayed. |
@@ -128,6 +128,7 @@ npm start
 
 ## プロジェクトの構成
 - フォルダ類
+
 | フォルダ名 | 内容 |
 | --- | --- |
 | .next | プロジェクト作成位はなく、実行すると生成される。この中に、プロジェクトから生成されたWebアプリのファイル類が保存される。 |
@@ -135,7 +136,9 @@ npm start
 | pages | 表示するWebページの内容がまとめられている。 |
 | public | 公開されるリソース類（イメージファイルなど）がまとめられている。 |
 | styles | スタイルシートファイルがまとめられている。 |
+
 - ファイル類
+
 | ファイル名 | 内容 |
 | --- | --- |
 | gitignore | Gitというバージョン管理システムのためのファイル |
