@@ -77,17 +77,17 @@ function usePersist(ky, initVal) {
     }
     const setValue = (val) => {
         try {
-            setSavedValue(val)
-            window.localStorage.setItem(key, JSON.stringify(val))
+            setSavedValue(val) // ローカルストレージへの保存
+            window.localStorage.setItem(key, JSON.stringify(val)) // stateの更新
         } catch (err) {
             console.log(err)
         }
     }
-    const [savedValue, setSavedValue] = useState(value)
+    const [savedValue, setSavedValue] = useState(value) // 初期値にローカルストレージに保存された値を設定
     return [savedValue, setValue]
 }
 
 export default usePersist
 ```
-- `savedValue` はHooksを使ったステートであり、初期値にはローカルストレージに保存された値が設定されていて、`setValue` 関数の中で値が更新されている
+- `savedValue` はHooksを使ったステートであり、初期値にはローカルストレージに保存された値が設定されている
 - `setValue` はローカルストレージへの保存とstateの更新の両方をやっている関数
