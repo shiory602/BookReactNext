@@ -37,6 +37,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ***
 
 # スタイルの適用
+方法は３つ
+- 変数にまとめる
+- `<style jsx>` タグを使う
+- `import styles from '../styles/Home.module.css'`を使う
 コード全体
 ```js
 // list 5-1
@@ -75,3 +79,12 @@ const h1 = {
 <h1 className="bg-primary text-white display-4 " style={h1}>React</h1>
 ```
 ## styled-jsx
+1. JSXの中に `<style jsx>` タグを作成し、その中にスタイルを記述
+```js
+<style jsx>{`
+    h1 {
+        textAlign: center;
+    }
+`}</style>
+```
+2. あとは普通にHTMLを記述する
