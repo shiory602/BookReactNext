@@ -150,6 +150,32 @@ npm start
 主に使うのは`pages`, `public`, `styles`の３つのフォルダと `package.json`ファイル
 ※ Next.jsでは全てJavaScriptで作られており、HTML（`index.html`）ファイルはない。
 
+# ページの用意
+Next.jsは「pages」でページを用意する
+```js
+// list 5-1
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
+
+export default function Home() {
+  return (
+    <div className={styles.container}>
+      <Head>
+        ... HTMLの`<head>`の内容を書く部分 ...
+      </Head>
+
+      <main className={styles.main}>
+        ... 中略 ...
+      </main>
+
+      <footer className={styles.footer}>
+        ... 中略 ...
+      </footer>
+    </div>
+  )
+}
+```
+
 
 # Next.jsの具体的な機能
 ## SSG と SSR の対応

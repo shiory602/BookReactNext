@@ -32,3 +32,46 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+***
+
+# スタイルの適用
+コード全体
+```js
+// list 5-1
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
+
+export default function Home() {
+    return (
+        <div>
+        <Head>
+            <title>{title}</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossOrigin="anonymous" />
+        </Head>
+
+        <h1 className="bg-primary text-white display-4 " style={h1}>React</h1>
+        <div className="container">
+            <p className="my-3" style={subtitle}>{title}</p>
+            <div className="alert alert-primary text-center">
+            <p className="h5" style={p}>{message}.</p>
+            </div>
+        </div>
+        </div>
+    )
+}
+```
+## 個々のタグにスタイルを設定
+1. スタイルの変数情報を変数にまとめておく
+```js
+const h1 = {
+    textAlign: 'right',
+    padding: '5px 15px'
+}
+```
+2. タグの`style`に設定
+```js
+<h1 className="bg-primary text-white display-4 " style={h1}>React</h1>
+```
+## styled-jsx
