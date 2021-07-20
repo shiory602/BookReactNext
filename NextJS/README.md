@@ -1,7 +1,7 @@
 # Contents
-1. Routing functions. The ability to create and use multiple pages. 2.
-2. Built-in CSS, about the different ways to incorporate style sheets. 3.
-3. Creating an API. How to access the server and get the data you need. 4.
+1. Routing functions. The ability to create and use multiple pages.
+2. Built-in CSS, about the different ways to incorporate style sheets.
+3. Creating an API. How to access the server and get the data you need.
 4. SWR, a module that handles data retrieved from the server as state.
 
 # Next.js.
