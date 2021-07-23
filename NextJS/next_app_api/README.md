@@ -77,5 +77,47 @@ value: 取り出した値
 key: インデックス番号
 
 # SWRの利用
-fetch APIは便利だが、アクセスするタイミングを考える必要がある。
-`SWR`パッケージネットワーク経由で値を取得するための独自フック
+fetch APIは便利だが、アクセスに呼び出すなどするとjsonデータが更新された時に手動でリロードする必要がある
+これを解決するのが**SWR**
+`SWR`パッケージネットワーク経由で値を取得するための独自フックで`useSWR`として使う
+## SWRのインストール
+まず、ターミナルでインストールした後に`import`して`useSWR`関数をロードする
+```
+npm install swr
+```
+## SWRの使い方
+1. インポートする
+```js
+import useSWR from 'swr'
+```
+2. 関数の中で fetch の代わりにステートを用意
+```js
+const { data } = useSWR('/data.json')
+```
+3. JSX 内で三項演算子を使って呼び出し
+三項演算子を使う
+```js
+{data != undefined ? 表示内容 : エラー表示 }
+```
+具体例
+```js
+{ data != undefined ? data.message : 'error...' }
+```
+テーブルの作成
+```js
+<table className="table table-dark">
+    <thead className="">
+        <tr><th>Name</th><th>Mail</th><th>Age</th></tr>
+    </thead>
+    <tbody>
+        { data != undefined ? data.data.map((value, key) => (
+        <tr key={key}>
+            <th>{value.name}</th>
+            <td>{value.mail}</td>
+            <td>{value.age}</td>
+        </tr>
+        )) : <tr><th></th><td>no data.</td><td></td></tr>}
+    </tbody>
+</table>
+```
+### テキストデータ
