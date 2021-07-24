@@ -80,12 +80,12 @@ key: インデックス番号
 fetch APIは便利だが、アクセスに呼び出すなどするとjsonデータが更新された時に手動でリロードする必要がある
 これを解決するのが**SWR**
 `SWR`パッケージネットワーク経由で値を取得するための独自フックで`useSWR`として使う
-## SWRのインストール
+### SWRのインストール
 まず、ターミナルでインストールした後に`import`して`useSWR`関数をロードする
 ```
 npm install swr
 ```
-## SWRの使い方
+## SWRを使ってjsonファイルを表示する
 1. インポートする
 ```js
 import useSWR from 'swr'
@@ -120,4 +120,13 @@ const { data } = useSWR('/data.json')
     </tbody>
 </table>
 ```
-### テキストデータ
+## SWRを使ってテキストデータを取得する
+アクセスに使う関数を引数に指定することでJSON以外のフォーマットのデータを利用できる
+```js
+const { data, err } = useSWR('/data.txt', function)
+```
+今回第二引数に入れた関数↓
+```js
+const func = (...args)=> fetch(...args).then(res => res.text())
+```
+`res.text()`は、Responseから取得したデータをテキストのまま返す。
