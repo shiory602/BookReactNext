@@ -130,3 +130,38 @@ const { data, err } = useSWR('/data.txt', function)
 const func = (...args)=> fetch(...args).then(res => res.text())
 ```
 `res.text()`は、Responseから取得したデータをテキストのまま返す。
+
+# APIデータを取り出す
+1. データ用コンポーネントを用意する
+データは配列で作成し、`export default`する
+```js
+export default [
+    {"name": "shiori", "mail": "shiori@com"}
+    .
+    .
+    .
+    .
+]
+```
+2. hello API に idパラメータを追加する
+pagesフォルダ内のapiフォルダにあるhello.jsを書き換え
+```js
+import apidata from '../../components/data'
+
+export default function handler(req, res) {
+  let id = req.query.id
+  if (id == undefined) { id = 0 }
+  if (id >= apidata.length) { id = 0 }
+
+  res.json(apidata[id])
+}
+```
+3. アクセス先を書き換えてデータを呼び出す
+> http://localhost:3000/api/hello?id=1
+`?id=番号`とすることで配列の中のデータが指定される
+この`?id=1`の部分をクエリーパラメータといい、渡された値はRequestのqueryプロパティにまとめられる。
+### いくつか表示させたい時
+`&`で繋ぐ
+```
+http://localhost:3000/api/hello?id=1&id=2&id=3
+```
