@@ -131,7 +131,7 @@ const func = (...args)=> fetch(...args).then(res => res.text())
 ```
 `res.text()`は、Responseから取得したデータをテキストのまま返す。
 
-# APIデータを取り出す
+## APIデータを取り出す
 1. データ用コンポーネントを用意する
 データは配列で作成し、`export default`する
 ```js
@@ -162,6 +162,46 @@ export default function handler(req, res) {
 この`?id=1`の部分をクエリーパラメータといい、渡された値はRequestのqueryプロパティにまとめられる。
 ### いくつか表示させたい時
 `&`で繋ぐ
+> http://localhost:3000/api/hello?id=1&id=2&id=3
+
+## hello API をページから利用する
+SWRを使ってhello APIからデータを取得
+直接アドレスを設定するのではなく、以下のような形でステートを作成
+1. アクセスするアドレスを保管する`address`というステートを用意
+2. `useSWR`で`address`を引数に指定することで`setAddress`でアドレスを変更するとSWRによって`data`ステートを呼び出せる
+```js
+const [ address, setAddress ] = useState('/api/hello')
+const { data, err } = useSWR(address)
 ```
-http://localhost:3000/api/hello?id=1&id=2&id=3
+3. 入力フィールドでは、`onChange`属性に関数を設定する
+```js
+const onChange = (e) => {
+    setAddress('/api/hello?id=' + e.target.value)
+}
 ```
+これで`/api/hello?id=番号`という値が`address`に設定され、更新された`address`を使ってSWRはデータを取得するようになる
+## `[id].js`でIdパラメータを処理する
+`hello?id=1`をもっと綺麗なアドレスで表示する
+> http://localhost:3000/api/hello/【ID番号】
+apiフォルダの中にhelloフォルダを作ってその中に`[id].js`ファイルを作成する
+```js
+import apidata from '../../../components/data'
+
+export default function handler(req, res) {
+    const {
+        query: {id}
+    } = req
+    
+    res.json(apidata[id])
+}
+```
+関数の中で分割代入：`req`の`query.id`が`{query: [id]}`という形でidに代入される。
+```js
+id = req.query.id 
+
+↓
+
+{ query: {id} } = req
+```
+
+## 
