@@ -180,6 +180,7 @@ const onChange = (e) => {
 }
 ```
 これで`/api/hello?id=番号`という値が`address`に設定され、更新された`address`を使ってSWRはデータを取得するようになる
+
 ## `[id].js`でIdパラメータを処理する
 `hello?id=1`をもっと綺麗なアドレスで表示する
 > http://localhost:3000/api/hello/【ID番号】
@@ -203,5 +204,53 @@ id = req.query.id
 
 { query: {id} } = req
 ```
+### 複数のパラメータの取得
+`[id].js`を使って`/hello/番号`というアドレスからid番号を取り出すことはできたが、複数のパラメータをアドレスで渡したい場合はどうするのか。
+この場合、配列ファイル名を使用する
+> [...名前].js
 
-## 
+1. 新しく`[...params].js`という名前のファイルを作成する
+`{ query: {params: [id, item]} }`という定数にパラメーターの値を入れる
+```js
+const {
+    query: {params: [id, item]}
+} = req
+```
+この時、`req`から代入されるquery内の項目は、ファイル名と同じである必要がある。
+ファイル名が`[...params].js`の時、`req`に入るパラメータは同じ名前である必要がある。
+```js
+query: {params: [ 値 ]}
+```
+2. `index.js`に３つのステートを用意
+- パラメータとして送信するidとitemは、ひとまとめにしてprefステートに保管。
+```js
+const [ pref, setPref ] = useState({id:0, item:'name'})
+```
+- アクセスするアドレスはaddressに保管。
+```js
+const [ address, setAddress ] = useState('/api/hello/' + pref.id + '/' + pref.item)
+```
+- SWRで取得するデータはdataというステートに保管。
+```js
+const { data, err } = useSWR(address)
+```
+3. 入力フィールドとプルダウンメニューをそれぞれonChangeとonSelectという関数を設定し、ステートの更新を行う
+`e.target.value`で得た値を`pref.id`と`pref.item`に設定し、それを`setPref(pref)`で更新する
+アクセスするアドレスは別のステートに用意されているので`setAddress`で変更することで、SWRが更新されdataが最新になる
+- 入力フィールドの更新
+```js
+const onChange = (e) => {
+    pref.id = e.target.value
+    setPref(pref)
+    setAddress('/api/hello/' + pref.id + '/' + pref.item)
+}
+```
+- プルダウンメニューの更新
+```js
+const onSelect = (e)=> {
+    pref.item = e.target.value
+    setPref(pref)
+    setAddress('/api/hello/' + pref.id + '/' + pref.item)
+}
+```
+これがネットワーク経由でサーバーから情報を取得しながら動くアプリの基本
