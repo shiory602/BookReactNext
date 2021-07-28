@@ -27,13 +27,7 @@ Webアプリから膨大なデータが必要なものを検索し取り出し�
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   var firebaseConfig = {
-    apiKey: "AIzaSyCVbO6amPfGin2-cqUV2N08mNq5JbpDxh4",
-    authDomain: "chatbot-shiory602.firebaseapp.com",
-    projectId: "chatbot-shiory602",
-    storageBucket: "chatbot-shiory602.appspot.com",
-    messagingSenderId: "934113601842",
-    appId: "1:934113601842:web:1a7b68c4e15ba36a7c0f2b",
-    measurementId: "G-KYF92Z5M79"
+    info
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
